@@ -4,19 +4,41 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(Lua REQUIRED)
-find_package(sol2 CONFIG REQUIRED)
-find_package(imgui CONFIG REQUIRED)
-find_package(glm CONFIG REQUIRED)
+
+include(FetchContent)
+
+FetchContent_Declare(
+  glm
+  GIT_REPOSITORY https://github.com/g-truc/glm.git
+  GIT_TAG 0.9.9.8
+)
+FetchContent_MakeAvailable(glm)
+
+FetchContent_Declare(
+  sol2
+  GIT_REPOSITORY https://github.com/ThePhD/sol2.git
+  GIT_TAG v3.3.0
+)
+FetchContent_MakeAvailable(sol2)
+
+FetchContent_Declare(
+  imgui
+  GIT_REPOSITORY https://github.com/ocornut/imgui.git
+  GIT_TAG v1.89.5
+)
+FetchContent_MakeAvailable(imgui)
 
 add_executable(main src/Main.cpp)
 
 target_link_libraries(main
   PRIVATE
-  $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
-  $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+  ${SDL2_LIBRARIES}
   ${LUA_LIBRARIES}
   sol2
-  imgui::imgui
   glm::glm
 )
-target_include_directories(main PRIVATE ${LUA_INCLUDE_DIR})
+target_include_directories(main
+  PRIVATE
+  ${LUA_INCLUDE_DIR}
+  ${imgui_SOURCE_DIR}
+)
