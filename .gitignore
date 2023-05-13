@@ -1,4 +1,5 @@
 .DS_Store
+.vscode
 
 # Prerequisites
 *.d
@@ -33,4 +34,10 @@
 *.out
 *.app
 
-.vscode
+# CMake build artifacts
+build/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+
+vcpkg_installed

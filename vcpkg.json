@@ -1,0 +1,11 @@
+{
+  "name": "manatee",
+  "version-string": "1.0.0",
+  "dependencies": [
+    "sdl2",
+    "lua",
+    "sol2",
+    "imgui",
+    "glm"
+  ]
+}
