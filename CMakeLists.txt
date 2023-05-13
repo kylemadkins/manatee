@@ -28,7 +28,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(imgui)
 
-add_executable(main src/Main.cpp)
+file(GLOB SOURCES "src/*.cpp")
+add_executable(main ${SOURCES})
 
 target_link_libraries(main
   PRIVATE
