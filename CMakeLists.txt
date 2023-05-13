@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.26)
 project(manatee)
 set(CMAKE_CXX_STANDARD 17)
 
-find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL2 REQUIRED)
 find_package(Lua REQUIRED)
 
 include(FetchContent)
