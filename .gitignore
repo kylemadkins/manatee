@@ -39,5 +39,3 @@ build/
 CMakeCache.txt
 CMakeFiles/
 Makefile
-
-vcpkg_installed
