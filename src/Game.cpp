@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <glm/glm.hpp>
 
 #include "Game.h"
 
@@ -10,7 +11,18 @@ Game::Game() {
 
 Game::~Game() {}
 
-void Game::Setup() {}
+glm::vec2 playerPos;
+glm::vec2 playerVel;
+
+void Game::Setup() {
+  playerPos = glm::vec2(10.0, 20.0);
+  playerVel = glm::vec2(1.0, 1.0);
+}
+
+void Game::Update() {
+  playerPos.x += playerVel.x;
+  playerPos.y += playerVel.y;
+}
 
 void Game::Initialize() {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -78,8 +90,6 @@ void Game::ProcessInput() {
   }
 }
 
-void Game::Update() {}
-
 void Game::Render() {
   SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
   SDL_RenderClear(renderer);
@@ -87,7 +97,12 @@ void Game::Render() {
   SDL_Surface* tankSurface = IMG_Load("../assets/images/tank-tiger-right.png");
   SDL_Texture* tankTexture = SDL_CreateTextureFromSurface(renderer, tankSurface);
   SDL_FreeSurface(tankSurface);
-  SDL_Rect tankRect = { 10, 10, 32, 32 };
+  SDL_Rect tankRect = {
+    static_cast<int>(playerPos.x),
+    static_cast<int>(playerPos.y),
+    32,
+    32
+  };
   SDL_RenderCopy(renderer, tankTexture, NULL, &tankRect);
 
   SDL_RenderPresent(renderer);
