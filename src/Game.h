@@ -12,6 +12,7 @@ class Game {
   public:
     Game();
     ~Game();
+    void Setup();
     void Initialize();
     void Run();
     void Destroy();

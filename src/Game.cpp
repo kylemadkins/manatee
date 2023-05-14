@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 #include "Game.h"
 
@@ -9,14 +10,16 @@ Game::Game() {
 
 Game::~Game() {}
 
+void Game::Setup() {}
+
 void Game::Initialize() {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
     std::cerr << "Unable to initialize SDL" << std::endl;
     return;
   }
 
-  windowWidth = 800;
-  windowHeight = 600;
+  windowWidth = 1280;
+  windowHeight = 720;
   window = SDL_CreateWindow(
     "Manatee",
     SDL_WINDOWPOS_CENTERED,
@@ -45,6 +48,7 @@ void Game::Initialize() {
 }
 
 void Game::Run() {
+  Setup();
   while (isRunning) {
     ProcessInput();
     Update();
@@ -77,7 +81,14 @@ void Game::ProcessInput() {
 void Game::Update() {}
 
 void Game::Render() {
-  SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+  SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
   SDL_RenderClear(renderer);
+
+  SDL_Surface* tankSurface = IMG_Load("../assets/images/tank-tiger-right.png");
+  SDL_Texture* tankTexture = SDL_CreateTextureFromSurface(renderer, tankSurface);
+  SDL_FreeSurface(tankSurface);
+  SDL_Rect tankRect = { 10, 10, 32, 32 };
+  SDL_RenderCopy(renderer, tankTexture, NULL, &tankRect);
+
   SDL_RenderPresent(renderer);
 }

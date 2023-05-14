@@ -3,6 +3,7 @@ project(manatee)
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
 find_package(Lua REQUIRED)
 
 include(FetchContent)
@@ -34,6 +35,7 @@ add_executable(main ${SOURCES})
 target_link_libraries(main
   PRIVATE
   ${SDL2_LIBRARIES}
+  SDL2_image::SDL2_image
   ${LUA_LIBRARIES}
   sol2
   glm::glm
