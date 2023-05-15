@@ -28,13 +28,12 @@ void Game::Initialize() {
     SDL_WINDOWPOS_CENTERED,
     windowWidth,
     windowHeight,
-    SDL_WINDOW_BORDERLESS
+    SDL_WINDOW_BORDERLESS | SDL_WINDOW_FULLSCREEN
   );
   if (!window) {
     std::cerr << "Unable to create a window" << std::endl;
     return;
   }
-  SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 
   renderer = SDL_CreateRenderer(
     window,
@@ -65,7 +64,7 @@ void Game::Destroy() {
 }
 
 void Game::Setup() {
-  playerPos = glm::vec2(10.0, 20.0);
+  playerPos = glm::vec2(0, 0);
   playerVel = glm::vec2(100.0, 0.0);
 }
 
