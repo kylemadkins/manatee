@@ -9,7 +9,7 @@ const int MS_PER_FRAME = 1000 / FPS;
 class Game {
   private:
     bool isRunning;
-    int previousFrameMs = 0;
+    int prevFrameMs = 0;
     SDL_Window* window;
     SDL_Renderer* renderer;
 

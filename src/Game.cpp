@@ -86,12 +86,12 @@ void Game::ProcessInput() {
 }
 
 void Game::Update() {
-  int waitTimeMs = MS_PER_FRAME - (SDL_GetTicks() - previousFrameMs);
-  if (waitTimeMs > 0 && waitTimeMs <= MS_PER_FRAME) {
-    SDL_Delay(waitTimeMs);
+  int waitMs = MS_PER_FRAME - (SDL_GetTicks() - prevFrameMs);
+  if (waitMs > 0 && waitMs <= MS_PER_FRAME) {
+    SDL_Delay(waitMs);
   }
-  double deltaTime = (SDL_GetTicks() - previousFrameMs) / 1000.0;
-  previousFrameMs = SDL_GetTicks();
+  double deltaTime = (SDL_GetTicks() - prevFrameMs) / 1000.0;
+  prevFrameMs = SDL_GetTicks();
 
   playerPos.x += playerVel.x * deltaTime;
   playerPos.y += playerVel.y * deltaTime;
