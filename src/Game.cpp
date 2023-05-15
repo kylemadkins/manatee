@@ -5,24 +5,14 @@
 
 #include "Game.h"
 
+glm::vec2 playerPos;
+glm::vec2 playerVel;
+
 Game::Game() {
   isRunning = false;
 }
 
 Game::~Game() {}
-
-glm::vec2 playerPos;
-glm::vec2 playerVel;
-
-void Game::Setup() {
-  playerPos = glm::vec2(10.0, 20.0);
-  playerVel = glm::vec2(1.0, 1.0);
-}
-
-void Game::Update() {
-  playerPos.x += playerVel.x;
-  playerPos.y += playerVel.y;
-}
 
 void Game::Initialize() {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -74,6 +64,11 @@ void Game::Destroy() {
   SDL_Quit();
 }
 
+void Game::Setup() {
+  playerPos = glm::vec2(10.0, 20.0);
+  playerVel = glm::vec2(100.0, 0.0);
+}
+
 void Game::ProcessInput() {
   SDL_Event sdlEvent;
   while (SDL_PollEvent(&sdlEvent)) {
@@ -90,6 +85,18 @@ void Game::ProcessInput() {
   }
 }
 
+void Game::Update() {
+  int waitTimeMs = MS_PER_FRAME - (SDL_GetTicks() - previousFrameMs);
+  if (waitTimeMs > 0 && waitTimeMs <= MS_PER_FRAME) {
+    SDL_Delay(waitTimeMs);
+  }
+  double deltaTime = (SDL_GetTicks() - previousFrameMs) / 1000.0;
+  previousFrameMs = SDL_GetTicks();
+
+  playerPos.x += playerVel.x * deltaTime;
+  playerPos.y += playerVel.y * deltaTime;
+}
+
 void Game::Render() {
   SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
   SDL_RenderClear(renderer);
@@ -104,6 +111,7 @@ void Game::Render() {
     32
   };
   SDL_RenderCopy(renderer, tankTexture, NULL, &tankRect);
+  SDL_DestroyTexture(tankTexture);
 
   SDL_RenderPresent(renderer);
 }
