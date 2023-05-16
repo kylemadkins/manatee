@@ -20,8 +20,10 @@ void Game::Initialize() {
     return;
   }
 
-  windowWidth = 1280;
-  windowHeight = 720;
+  SDL_DisplayMode displayMode;
+  SDL_GetCurrentDisplayMode(0, &displayMode);
+  windowWidth = displayMode.w;
+  windowHeight = displayMode.h;
   window = SDL_CreateWindow(
     "Manatee",
     SDL_WINDOWPOS_CENTERED,
@@ -44,6 +46,21 @@ void Game::Initialize() {
     std::cerr << "Unable to create a renderer" << std::endl;
     return;
   }
+
+  const int targetWidth = 1280;
+  const int targetHeight = 720;
+
+  int windowWidth, windowHeight;
+  SDL_GetWindowSize(window, &windowWidth, &windowHeight);
+
+  float scaleX = static_cast<float>(windowWidth) / targetWidth;
+  float scaleY = static_cast<float>(windowHeight) / targetHeight;
+  float scale = std::min(scaleX, scaleY);
+
+  int logicalWidth = static_cast<int>(targetWidth * scale);
+  int logicalHeight = static_cast<int>(targetHeight * scale);
+
+  SDL_RenderSetLogicalSize(renderer, logicalWidth, logicalHeight);
 
   isRunning = true;
 }
@@ -97,8 +114,10 @@ void Game::Update() {
 }
 
 void Game::Render() {
-  SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
+  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderClear(renderer);
+  SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
+  SDL_RenderFillRect(renderer, NULL);
 
   SDL_Surface* tankSurface = IMG_Load("../assets/images/tank-tiger-right.png");
   SDL_Texture* tankTexture = SDL_CreateTextureFromSurface(renderer, tankSurface);
