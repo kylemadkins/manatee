@@ -50,9 +50,6 @@ void Game::Initialize() {
   const int targetWidth = 1280;
   const int targetHeight = 720;
 
-  int windowWidth, windowHeight;
-  SDL_GetWindowSize(window, &windowWidth, &windowHeight);
-
   float scaleX = static_cast<float>(windowWidth) / targetWidth;
   float scaleY = static_cast<float>(windowHeight) / targetHeight;
   float scale = std::min(scaleX, scaleY);
