@@ -36,8 +36,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(spdlog)
 
-file(GLOB SOURCES "src/*.cpp")
-add_executable(main ${SOURCES})
+file(GLOB SOURCES "src/**/*.cpp")
+add_executable(main src/Main.cpp ${SOURCES})
 
 target_link_libraries(main
   PRIVATE
