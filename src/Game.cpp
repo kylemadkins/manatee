@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <glm/glm.hpp>
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
 
 #include "Game.h"
 
