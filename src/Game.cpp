@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 #include "Game.h"
+#include "Logger.h"
 
 glm::vec2 playerPos;
 glm::vec2 playerVel;
@@ -16,7 +17,7 @@ Game::~Game() {}
 
 void Game::Initialize() {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-    std::cerr << "Unable to initialize SDL" << std::endl;
+    Logger::Err("Unable to initialize SDL");
     return;
   }
 
@@ -33,7 +34,7 @@ void Game::Initialize() {
     SDL_WINDOW_BORDERLESS | SDL_WINDOW_FULLSCREEN
   );
   if (!window) {
-    std::cerr << "Unable to create a window" << std::endl;
+    Logger::Err("Unable to create a window");
     return;
   }
 
@@ -43,7 +44,7 @@ void Game::Initialize() {
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
   );
   if (!renderer) {
-    std::cerr << "Unable to create a renderer" << std::endl;
+    Logger::Err("Unable to create a renderer");
     return;
   }
 
@@ -60,6 +61,8 @@ void Game::Initialize() {
   SDL_RenderSetLogicalSize(renderer, logicalWidth, logicalHeight);
 
   isRunning = true;
+
+  Logger::Log("Game initialized");
 }
 
 void Game::Run() {
