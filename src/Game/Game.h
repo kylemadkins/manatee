@@ -5,7 +5,7 @@
 
 class Game {
   private:
-    bool isRunning;
+    bool isRunning = false;
     int previousTicks = 0;
     SDL_Window* window;
     SDL_Renderer* renderer;

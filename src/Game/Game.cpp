@@ -9,9 +9,7 @@
 glm::vec2 playerPos;
 glm::vec2 playerVel;
 
-Game::Game() {
-  isRunning = false;
-}
+Game::Game() {}
 
 Game::~Game() {}
 
