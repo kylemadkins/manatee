@@ -29,6 +29,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(imgui)
 
+FetchContent_Declare(
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG v1.11.0
+)
+FetchContent_MakeAvailable(spdlog)
+
 file(GLOB SOURCES "src/*.cpp")
 add_executable(main ${SOURCES})
 
@@ -39,6 +46,7 @@ target_link_libraries(main
   ${LUA_LIBRARIES}
   sol2
   glm::glm
+  spdlog::spdlog
 )
 target_include_directories(main
   PRIVATE

@@ -2,9 +2,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <glm/glm.hpp>
+#include "spdlog/spdlog.h"
 
 #include "Game.h"
-#include "Logger.h"
 
 glm::vec2 playerPos;
 glm::vec2 playerVel;
@@ -17,7 +17,7 @@ Game::~Game() {}
 
 void Game::Initialize() {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-    Logger::Err("Unable to initialize SDL");
+    spdlog::error("Unable to initialize SDL");
     return;
   }
 
@@ -34,7 +34,7 @@ void Game::Initialize() {
     SDL_WINDOW_BORDERLESS | SDL_WINDOW_FULLSCREEN
   );
   if (!window) {
-    Logger::Err("Unable to create a window");
+    spdlog::error("Unable to create a window");
     return;
   }
 
@@ -44,7 +44,7 @@ void Game::Initialize() {
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
   );
   if (!renderer) {
-    Logger::Err("Unable to create a renderer");
+    spdlog::error("Unable to create a renderer");
     return;
   }
 
@@ -62,7 +62,7 @@ void Game::Initialize() {
 
   isRunning = true;
 
-  Logger::Log("Game initialized");
+  spdlog::info("Game initialized");
 }
 
 void Game::Run() {
