@@ -5,9 +5,7 @@
 #include <spdlog/spdlog.h>
 
 #include "Game.h"
-
-glm::vec2 playerPos;
-glm::vec2 playerVel;
+#include "../ECS/ECS.h"
 
 Game::Game() {}
 
@@ -79,8 +77,12 @@ void Game::Destroy() {
 }
 
 void Game::Setup() {
-  playerPos = glm::vec2(0, 0);
-  playerVel = glm::vec2(100.0, 0.0);
+  /*
+  Entity tank = registry.CreateEntity();
+  tank.AddComponent<TransformComponent>();
+  tank.AddComponent<BoxColliderComponent>();
+  tank.AddComponent<SpriteComponent>("../assets/images/tank-tiger-right.png");
+  */
 }
 
 void Game::ProcessInput() {
@@ -103,27 +105,17 @@ void Game::Update() {
   double deltaTime = (SDL_GetTicks() - previousTicks) / 1000.0;
   previousTicks = SDL_GetTicks();
 
-  playerPos.x += playerVel.x * deltaTime;
-  playerPos.y += playerVel.y * deltaTime;
+  /*
+  MovementSystem.Update();
+  CollisionSystem.Update();
+  */
 }
 
 void Game::Render() {
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderClear(renderer);
-  SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
-  SDL_RenderFillRect(renderer, NULL);
 
-  SDL_Surface* tankSurface = IMG_Load("../assets/images/tank-tiger-right.png");
-  SDL_Texture* tankTexture = SDL_CreateTextureFromSurface(renderer, tankSurface);
-  SDL_FreeSurface(tankSurface);
-  SDL_Rect tankRect = {
-    static_cast<int>(playerPos.x),
-    static_cast<int>(playerPos.y),
-    32,
-    32
-  };
-  SDL_RenderCopy(renderer, tankTexture, NULL, &tankRect);
-  SDL_DestroyTexture(tankTexture);
+  // Render game objects...
 
   SDL_RenderPresent(renderer);
 }
